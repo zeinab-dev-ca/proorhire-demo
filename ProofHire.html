@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProofHire — Verified Hiring for Niagara</title>
+<style>
+:root {
+  --black: #09090b;
+  --dark: #111113;
+  --card: #18181b;
+  --border: #27272a;
+  --border2: #3f3f46;
+  --gold: #d4a843;
+  --gold-dim: #8a6c28;
+  --gold-bg: #1c1608;
+  --white: #fafafa;
+  --muted: #71717a;
+  --muted2: #a1a1aa;
+  --green: #22c55e;
+  --green-bg: #052e16;
+  --red: #ef4444;
+  --red-bg: #2d0a0a;
+  --blue: #3b82f6;
+  --blue-bg: #0c1a3a;
+  --radius: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--black); color:var(--white); font-family:'Segoe UI',system-ui,sans-serif; font-size:15px; line-height:1.6; min-height:100vh; }
+a { color:inherit; text-decoration:none; }
+input,textarea,select { background:var(--card); border:1px solid var(--border); color:var(--white); border-radius:8px; padding:10px 14px; font-size:14px; font-family:inherit; width:100%; outline:none; transition:border .2s; }
+input:focus,textarea:focus,select:focus { border-color:var(--gold); }
+input::placeholder,textarea::placeholder { color:var(--muted); }
+select option { background:var(--card); }
+button { cursor:pointer; border:none; font-family:inherit; font-size:14px; border-radius:8px; transition:all .15s; }
+.btn-gold { background:var(--gold); color:#000; font-weight:700; padding:11px 22px; }
+.btn-gold:hover { background:#e8bc56; }
+.btn-dark { background:var(--card); color:var(--white); border:1px solid var(--border); padding:10px 20px; }
+.btn-dark:hover { border-color:var(--border2); background:#222; }
+.btn-outline { background:transparent; color:var(--gold); border:1px solid var(--gold); padding:10px 20px; font-weight:600; }
+.btn-outline:hover { background:var(--gold-bg); }
+.btn-green { background:var(--green); color:#000; font-weight:700; padding:9px 18px; font-size:13px; }
+.btn-green:hover { background:#16a34a; }
+.btn-red { background:var(--red-bg); color:var(--red); border:1px solid #7f1d1d; padding:9px 18px; font-size:13px; }
+.btn-red:hover { background:#3b0a0a; }
+.btn-sm { padding:7px 14px; font-size:13px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+.badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
+.badge-green { background:var(--green-bg); color:var(--green); border:1px solid #14532d; }
+.badge-red { background:var(--red-bg); color:var(--red); border:1px solid #7f1d1d; }
+.badge-gold { background:var(--gold-bg); color:var(--gold); border:1px solid var(--gold-dim); }
+.badge-blue { background:var(--blue-bg); color:var(--blue); border:1px solid #1e3a8a; }
+.badge-muted { background:#27272a; color:var(--muted2); }
+.tag { display:inline-block; background:#27272a; color:var(--muted2); padding:3px 10px; border-radius:20px; font-size:12px; }
+label { display:block; font-size:13px; color:var(--muted2); margin-bottom:6px; font-weight:500; }
+.form-group { margin-bottom:18px; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.alert { border-radius:8px; padding:12px 16px; font-size:14px; margin-bottom:16px; }
+.alert-err { background:var(--red-bg); border:1px solid #7f1d1d; color:#fca5a5; }
+.alert-ok { background:var(--green-bg); border:1px solid #14532d; color:#86efac; }
+/* NAV */
+.nav { background:rgba(9,9,11,.95); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }
+.nav-inner { max-width:1200px; margin:0 auto; padding:0 24px; height:60px; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { font-size:20px; font-weight:800; color:var(--gold); letter-spacing:-.5px; cursor:pointer; }
+.nav-logo span { color:var(--white); font-weight:300; }
+.nav-links { display:flex; align-items:center; gap:12px; }
+/* LAYOUT */
+.page { max-width:1100px; margin:0 auto; padding:40px 24px; }
+.page-sm { max-width:500px; margin:0 auto; padding:60px 24px; }
+.page-md { max-width:800px; margin:0 auto; padding:40px 24px; }
+/* LANDING */
+.hero { text-align:center; padding:100px 24px 80px; background:radial-gradient(ellipse 90% 50% at 50% 0%,#1c1608,transparent); border-bottom:1px solid var(--border); }
+.hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:var(--gold-bg); border:1px solid var(--gold-dim); color:var(--gold); padding:6px 16px; border-radius:20px; font-size:13px; font-weight:600; margin-bottom:28px; }
+.hero h1 { font-size:clamp(44px,8vw,88px); font-weight:900; line-height:.95; letter-spacing:-2px; margin-bottom:24px; }
+.hero h1 em { font-style:normal; color:var(--gold); }
+.hero-sub { font-size:18px; color:var(--muted2); max-width:580px; margin:0 auto 40px; line-height:1.6; }
+.hero-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.hero-btns .btn-gold { padding:14px 32px; font-size:16px; border-radius:10px; }
+.hero-btns .btn-outline { padding:13px 32px; font-size:16px; border-radius:10px; }
+.stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.stat-item { background:var(--black); padding:32px 24px; text-align:center; }
+.stat-num { font-size:42px; font-weight:900; color:var(--gold); letter-spacing:-2px; line-height:1; }
+.stat-label { font-size:13px; color:var(--muted); margin-top:6px; }
+.how-section { max-width:1100px; margin:0 auto; padding:80px 24px; }
+.how-section h2 { font-size:36px; font-weight:800; text-align:center; margin-bottom:16px; }
+.how-section p.sub { text-align:center; color:var(--muted2); margin-bottom:60px; font-size:16px; }
+.how-cols { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+.how-side h3 { font-size:18px; font-weight:700; margin-bottom:24px; display:flex; align-items:center; gap:10px; }
+.how-step { display:flex; gap:16px; margin-bottom:20px; }
+.how-num { width:32px; height:32px; border-radius:50%; background:var(--gold-bg); border:1px solid var(--gold-dim); color:var(--gold); font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+.how-step-text strong { display:block; font-size:14px; margin-bottom:3px; }
+.how-step-text span { font-size:13px; color:var(--muted2); }
+.diff-section { background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:80px 24px; }
+.diff-inner { max-width:1100px; margin:0 auto; }
+.diff-inner h2 { font-size:36px; font-weight:800; text-align:center; margin-bottom:60px; }
+.diff-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.diff-card { background:var(--black); border:1px solid var(--border); border-radius:var(--radius); padding:28px; }
+.diff-icon { font-size:32px; margin-bottom:14px; }
+.diff-card h4 { font-size:16px; font-weight:700; margin-bottom:8px; }
+.diff-card p { font-size:13px; color:var(--muted2); line-height:1.6; }
+.cta-section { text-align:center; padding:80px 24px; }
+.cta-section h2 { font-size:36px; font-weight:800; margin-bottom:16px; }
+.cta-section p { color:var(--muted2); margin-bottom:36px; font-size:16px; }
+/* AUTH */
+.auth-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:40px; }
+.auth-logo { text-align:center; margin-bottom:32px; }
+.auth-logo .logo-big { font-size:28px; font-weight:900; color:var(--gold); }
+.auth-logo .logo-big span { color:var(--white); font-weight:300; }
+.auth-tabs { display:flex; background:var(--black); border-radius:8px; padding:4px; margin-bottom:28px; }
+.auth-tab { flex:1; text-align:center; padding:9px; border-radius:6px; font-size:14px; font-weight:600; cursor:pointer; color:var(--muted); transition:all .15s; }
+.auth-tab.active { background:var(--card); color:var(--white); }
+/* DASHBOARD */
+.dash-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:32px; flex-wrap:wrap; gap:16px; }
+.dash-title { font-size:28px; font-weight:800; }
+.stats-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
+.stat-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+.stat-card .num { font-size:32px; font-weight:900; color:var(--gold); }
+.stat-card .lbl { font-size:12px; color:var(--muted); margin-top:2px; }
+.jobs-table { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.table-header { display:grid; grid-template-columns:2fr 1fr 1fr 1fr 1fr 120px; gap:12px; padding:14px 20px; border-bottom:1px solid var(--border); font-size:12px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.05em; }
+.table-row { display:grid; grid-template-columns:2fr 1fr 1fr 1fr 1fr 120px; gap:12px; padding:16px 20px; border-bottom:1px solid var(--border); align-items:center; transition:background .15s; }
+.table-row:last-child { border-bottom:none; }
+.table-row:hover { background:#1e1e21; }
+.job-title-cell strong { display:block; font-size:15px; margin-bottom:3px; }
+.job-title-cell span { font-size:12px; color:var(--muted); }
+/* JOB DETAIL */
+.detail-header { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:24px; }
+.detail-header h1 { font-size:26px; font-weight:800; margin-bottom:8px; }
+.detail-meta { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+.split-panel { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.panel { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.panel-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.panel-header h3 { font-size:15px; font-weight:700; display:flex; align-items:center; gap:8px; }
+.applicant-row { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+.applicant-row:last-child { border-bottom:none; }
+.applicant-info strong { display:block; font-size:14px; margin-bottom:4px; }
+.applicant-info span { font-size:12px; color:var(--muted); }
+.cert-list { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+.knockout-reason { font-size:12px; color:var(--red); margin-top:4px; display:flex; align-items:center; gap:4px; }
+.applicant-actions { display:flex; gap:8px; }
+/* JOB BOARD */
+.search-bar { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:24px; display:flex; gap:12px; flex-wrap:wrap; }
+.search-bar input { flex:2; min-width:200px; }
+.search-bar select { flex:1; min-width:140px; }
+.jobs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:20px; }
+.job-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; display:flex; flex-direction:column; gap:12px; transition:border-color .2s; cursor:pointer; }
+.job-card:hover { border-color:var(--gold-dim); }
+.job-card h3 { font-size:17px; font-weight:700; }
+.job-card-meta { display:flex; gap:8px; flex-wrap:wrap; }
+.job-card p { font-size:13px; color:var(--muted2); line-height:1.6; flex:1; }
+.req-list { display:flex; gap:6px; flex-wrap:wrap; }
+.job-card-footer { display:flex; justify-content:space-between; align-items:center; margin-top:auto; }
+/* APPLICATION FORM */
+.apply-header { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:24px; }
+.apply-header h1 { font-size:22px; font-weight:800; margin-bottom:6px; }
+.cert-check-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+.cert-check { display:flex; align-items:center; gap:10px; background:var(--black); border:1px solid var(--border); border-radius:8px; padding:10px 14px; cursor:pointer; transition:border-color .15s; }
+.cert-check input[type=checkbox] { width:16px; height:16px; accent-color:var(--gold); flex-shrink:0; }
+.cert-check:hover { border-color:var(--border2); }
+.cert-check.checked { border-color:var(--gold-dim); background:var(--gold-bg); }
+.ko-question { background:var(--black); border:1px solid var(--border); border-radius:8px; padding:16px; margin-bottom:12px; }
+.ko-question p { font-size:14px; font-weight:600; margin-bottom:10px; }
+.ko-options { display:flex; flex-direction:column; gap:6px; }
+.ko-opt { display:flex; align-items:center; gap:10px; padding:9px 12px; border:1px solid var(--border); border-radius:6px; cursor:pointer; font-size:14px; transition:all .15s; }
+.ko-opt:hover { border-color:var(--border2); }
+.ko-opt input[type=radio] { accent-color:var(--gold); }
+.ko-opt.selected { border-color:var(--gold-dim); background:var(--gold-bg); }
+/* RESULT PAGE */
+.result-page { min-height:80vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:60px 24px; }
+.result-icon { font-size:72px; margin-bottom:24px; }
+.result-page h1 { font-size:42px; font-weight:900; margin-bottom:16px; }
+.result-page p { font-size:17px; color:var(--muted2); max-width:500px; margin:0 auto 32px; line-height:1.7; }
+.result-detail { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; max-width:480px; width:100%; text-align:left; margin-bottom:24px; }
+/* SEEKER PROFILE */
+.profile-tabs { display:flex; gap:8px; margin-bottom:28px; flex-wrap:wrap; }
+.p-tab { padding:9px 18px; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; background:var(--card); border:1px solid var(--border); color:var(--muted); transition:all .15s; }
+.p-tab.active { background:var(--gold-bg); border-color:var(--gold-dim); color:var(--gold); }
+/* POST JOB */
+.ko-builder { background:var(--black); border:1px solid var(--border); border-radius:8px; padding:16px; margin-bottom:12px; }
+.ko-builder .ko-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.ko-builder .ko-header span { font-size:13px; font-weight:700; color:var(--gold); }
+/* MISC */
+.empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
+.empty-state .icon { font-size:48px; margin-bottom:16px; }
+.section-title { font-size:22px; font-weight:800; margin-bottom:20px; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--muted2); font-size:14px; margin-bottom:24px; cursor:pointer; }
+.back-link:hover { color:var(--white); }
+.divider { height:1px; background:var(--border); margin:24px 0; }
+.toast { position:fixed; bottom:24px; right:24px; background:var(--green); color:#000; padding:12px 20px; border-radius:10px; font-weight:700; font-size:14px; z-index:999; animation:slideUp .3s ease; }
+@keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@media(max-width:768px){
+  .stats-cards{grid-template-columns:1fr 1fr}
+  .split-panel{grid-template-columns:1fr}
+  .how-cols{grid-template-columns:1fr}
+  .diff-grid{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+  .table-header,.table-row{grid-template-columns:2fr 1fr 80px;font-size:12px}
+  .table-header>*:nth-child(2),.table-row>*:nth-child(2),
+  .table-header>*:nth-child(3),.table-row>*:nth-child(3),
+  .table-header>*:nth-child(4),.table-row>*:nth-child(4){ display:none}
+  .stats-row{grid-template-columns:1fr}
+  .cert-check-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+const state = {
+  currentUser: null,
+  userType: null, // 'employer' | 'seeker'
+  route: 'landing',
+  routeParams: {},
+  toast: null,
+};
+
+// ═══════════════════════════════════════════════════
+// DATABASE (in-memory)
+// ═══════════════════════════════════════════════════
+const db = {
+  employers: [
+    { id: 'e1', name: 'Sarah Mitchell', company: 'Niagara Steel Works', email: 'demo@proofhire.com', password: 'Demo@1234', sector: 'Manufacturing' },
+    { id: 'e2', name: 'Marco Ferrante', company: 'Escarpment Hospitality Group', email: 'marco@proofhire.com', password: 'Demo@1234', sector: 'Hospitality' },
+  ],
+  seekers: [
+    { id: 's1', name: 'Jordan Ellis', email: 'jordan@demo.com', password: 'Demo@1234', phone: '905-555-0101', location: 'St. Catharines, ON', sector: 'Manufacturing', experience: '5 years forklift operator, Welland facility', certs: ['WHMIS 2015', 'Forklift Certification', 'Working at Heights'], availability: 'Full-time', transport: true },
+    { id: 's2', name: 'Aisha Okonkwo', email: 'aisha@demo.com', password: 'Demo@1234', phone: '905-555-0202', location: 'Niagara Falls, ON', sector: 'Hospitality', experience: '3 years front-of-house, banquet service', certs: ['Food Handler Certification', 'Smart Serve'], availability: 'Full-time / Weekends', transport: true },
+    { id: 's3', name: 'Tyler Nguyen', email: 'tyler@demo.com', password: 'Demo@1234', phone: '905-555-0303', location: 'Welland, ON', sector: 'Manufacturing', experience: '2 years general labour', certs: ['WHMIS 2015'], availability: 'Full-time', transport: false },
+    { id: 's4', name: 'Priya Sharma', email: 'priya@demo.com', password: 'Demo@1234', phone: '905-555-0404', location: 'Thorold, ON', sector: 'Manufacturing', experience: '7 years machinist, precision tooling', certs: ['WHMIS 2015', 'Working at Heights', 'Forklift Certification', 'First Aid CPR'], availability: 'Full-time', transport: true },
+    { id: 's5', name: 'Devon Carter', email: 'devon@demo.com', password: 'Demo@1234', phone: '905-555-0505', location: 'Grimsby, ON', sector: 'Hospitality', experience: '1 year kitchen prep', certs: ['Food Handler Certification'], availability: 'Part-time', transport: false },
+  ],
+  jobs: [
+    {
+      id: 'j1', employerId: 'e1',
+      title: 'Forklift Operator', sector: 'Manufacturing', location: 'Welland, ON',
+      salary: '$22–$26/hr', type: 'Full-time', posted: '2025-03-07',
+      description: 'Niagara Steel Works is hiring a certified forklift operator for our Welland facility. You will be responsible for moving raw materials and finished product throughout our 80,000 sq ft warehouse. Safety-first environment, day shift available.',
+      requirements: ['Forklift Certification', 'WHMIS 2015', 'Steel-toed boots', 'Own transportation'],
+      knockoutQuestions: [
+        { id: 'kq1', question: 'Do you hold a valid Ontario Forklift Operator certificate?', correctAnswer: 'Yes', options: ['Yes', 'No', 'I have equivalent experience but no certificate'] },
+        { id: 'kq2', question: 'Are you legally eligible to work in Canada?', correctAnswer: 'Yes, I am a citizen or permanent resident', options: ['Yes, I am a citizen or permanent resident', 'I have a valid work permit', 'No'] },
+        { id: 'kq3', question: 'Can you reliably commute to Welland, ON for day shifts (6am–2pm)?', correctAnswer: 'Yes', options: ['Yes', 'No', 'I need occasional flexibility'] },
+      ],
+      active: true,
+    },
+    {
+      id: 'j2', employerId: 'e1',
+      title: 'CNC Machinist — Journeyperson', sector: 'Manufacturing', location: 'St. Catharines, ON',
+      salary: '$28–$34/hr', type: 'Full-time', posted: '2025-03-05',
+      description: 'Seeking a licensed CNC Machinist to join our precision components team. You will set up and operate CNC lathes and mills, read technical drawings, and maintain tight tolerances. Afternoon shift with shift premium.',
+      requirements: ['Machinist Trade Certificate (433A)', 'WHMIS 2015', 'Working at Heights', 'Blueprint reading'],
+      knockoutQuestions: [
+        { id: 'kq4', question: 'Do you hold an Ontario Machinist (433A) Certificate of Qualification?', correctAnswer: 'Yes, licensed journeyperson', options: ['Yes, licensed journeyperson', 'Apprentice — in progress', 'No'] },
+        { id: 'kq5', question: 'How many years of CNC experience do you have?', correctAnswer: '3+ years', options: ['3+ years', '1–2 years', 'Less than 1 year'] },
+        { id: 'kq6', question: 'Are you comfortable reading and working from engineering drawings and GD&T?', correctAnswer: 'Yes, proficiently', options: ['Yes, proficiently', 'Basic understanding', 'No experience'] },
+      ],
+      active: true,
+    },
+    {
+      id: 'j3', employerId: 'e2',
+      title: 'Banquet Server / Event Staff', sector: 'Hospitality', location: 'Niagara-on-the-Lake, ON',
+      salary: '$18–$22/hr + gratuities', type: 'Full-time / Part-time',  posted: '2025-03-08',
+      description: 'Escarpment Hospitality Group is hiring banquet servers for our award-winning Niagara-on-the-Lake properties. You will serve guests at weddings, corporate events, and winery dinners. Professional appearance and guest-first attitude required.',
+      requirements: ['Smart Serve Certification', 'Food Handler Certification', 'Guest service experience', 'Weekend availability'],
+      knockoutQuestions: [
+        { id: 'kq7', question: 'Do you hold a valid Smart Serve certificate?', correctAnswer: 'Yes', options: ['Yes', 'No', 'Expired — willing to renew'] },
+        { id: 'kq8', question: 'Are you available to work Friday evenings and weekends?', correctAnswer: 'Yes, fully available', options: ['Yes, fully available', 'Most weekends but not all', 'No, weekdays only'] },
+        { id: 'kq9', question: 'Do you have a Food Handler Certificate?', correctAnswer: 'Yes', options: ['Yes', 'No', 'In progress'] },
+      ],
+      active: true,
+    },
+  ],
+  applications: [
+    // Job j1 applications
+    { id: 'a1', jobId: 'j1', seekerId: 's1', status: 'passed', appliedAt: '2025-03-08', koResults: [{id:'kq1',answer:'Yes',passed:true},{id:'kq2',answer:'Yes, I am a citizen or permanent resident',passed:true},{id:'kq3',answer:'Yes',passed:true}], shortlisted: false },
+    { id: 'a2', jobId: 'j1', seekerId: 's4', status: 'passed', appliedAt: '2025-03-09', koResults: [{id:'kq1',answer:'Yes',passed:true},{id:'kq2',answer:'Yes, I am a citizen or permanent resident',passed:true},{id:'kq3',answer:'Yes',passed:true}], shortlisted: true },
+    { id: 'a3', jobId: 'j1', seekerId: 's3', status: 'knocked', appliedAt: '2025-03-08', koResults: [{id:'kq1',answer:'I have equivalent experience but no certificate',passed:false},{id:'kq2',answer:'Yes, I am a citizen or permanent resident',passed:true},{id:'kq3',answer:'Yes',passed:true}], knockoutReason: 'Does not hold a valid Forklift Operator certificate.', shortlisted: false },
+    // Job j2 applications
+    { id: 'a4', jobId: 'j2', seekerId: 's4', status: 'passed', appliedAt: '2025-03-07', koResults: [{id:'kq4',answer:'Yes, licensed journeyperson',passed:true},{id:'kq5',answer:'3+ years',passed:true},{id:'kq6',answer:'Yes, proficiently',passed:true}], shortlisted: true },
+    { id: 'a5', jobId: 'j2', seekerId: 's3', status: 'knocked', appliedAt: '2025-03-08', koResults: [{id:'kq4',answer:'Apprentice — in progress',passed:false},{id:'kq5',answer:'1–2 years',passed:false},{id:'kq6',answer:'Basic understanding',passed:false}], knockoutReason: 'Requires a licensed Journeyperson certificate and 3+ years CNC experience.', shortlisted: false },
+    // Job j3 applications
+    { id: 'a6', jobId: 'j3', seekerId: 's2', status: 'passed', appliedAt: '2025-03-09', koResults: [{id:'kq7',answer:'Yes',passed:true},{id:'kq8',answer:'Yes, fully available',passed:true},{id:'kq9',answer:'Yes',passed:true}], shortlisted: false },
+    { id: 'a7', jobId: 'j3', seekerId: 's5', status: 'knocked', appliedAt: '2025-03-09', koResults: [{id:'kq7',answer:'No',passed:false},{id:'kq8',answer:'Yes, fully available',passed:true},{id:'kq9',answer:'Food Handler Certification',passed:true}], knockoutReason: 'Smart Serve certificate is required for all serving roles.', shortlisted: false },
+  ],
+  // temp app state
+  pendingApp: null,
+};
+
+// helpers
+function getJob(id){ return db.jobs.find(j=>j.id===id); }
+function getEmployer(id){ return db.employers.find(e=>e.id===id); }
+function getSeeker(id){ return db.seekers.find(s=>s.id===id); }
+function getJobApplications(jobId){ return db.applications.filter(a=>a.jobId===jobId); }
+function getSeekerApplications(seekerId){ return db.applications.filter(a=>a.seekerId===seekerId); }
+function getEmployerJobs(empId){ return db.jobs.filter(j=>j.employerId===empId); }
+
+// ═══════════════════════════════════════════════════
+// ROUTER
+// ═══════════════════════════════════════════════════
+function navigate(route, params={}){
+  state.route = route;
+  state.routeParams = params;
+  render();
+  window.scrollTo(0,0);
+}
+
+// ═══════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════
+function showToast(msg, color='var(--green)'){
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.style.background = color;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 3000);
+}
+
+// ═══════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════
+function render(){
+  const app = document.getElementById('app');
+  const routes = {
+    landing: renderLanding,
+    'employer-auth': renderEmployerAuth,
+    'seeker-auth': renderSeekerAuth,
+    'employer-dashboard': renderDashboard,
+    'job-detail': renderJobDetail,
+    'post-job': renderPostJob,
+    'job-board': renderJobBoard,
+    'apply': renderApplyForm,
+    'apply-result': renderApplyResult,
+    'seeker-profile': renderSeekerProfile,
+    'seeker-dashboard': renderSeekerDashboard,
+  };
+  const fn = routes[state.route] || renderLanding;
+  app.innerHTML = renderNav() + fn();
+  attachEvents();
+}
+
+// ═══════════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════════
+function renderNav(){
+  const user = state.currentUser;
+  let right = '';
+  if(!user){
+    right = `<button class="btn-dark btn-sm" onclick="navigate('seeker-auth')">Job Seekers</button>
+             <button class="btn-gold btn-sm" onclick="navigate('employer-auth')">Employers</button>`;
+  } else if(state.userType==='employer'){
+    right = `<span style="font-size:13px;color:var(--muted2)">${user.company}</span>
+             <button class="btn-dark btn-sm" onclick="navigate('post-job')">+ Post Job</button>
+             <button class="btn-dark btn-sm" onclick="logout()">Sign Out</button>`;
+  } else {
+    right = `<span style="font-size:13px;color:var(--muted2)">${user.name}</span>
+             <button class="btn-dark btn-sm" onclick="navigate('job-board')">Browse Jobs</button>
+             <button class="btn-dark btn-sm" onclick="navigate('seeker-dashboard')">My Applications</button>
+             <button class="btn-dark btn-sm" onclick="navigate('seeker-profile')">My Profile</button>
+             <button class="btn-dark btn-sm" onclick="logout()">Sign Out</button>`;
+  }
+  return `<nav class="nav"><div class="nav-inner">
+    <div class="nav-logo" onclick="navigate('landing')">Proof<span>Hire</span></div>
+    <div class="nav-links">${right}</div>
+  </div></nav>`;
+}
+
+// ═══════════════════════════════════════════════════
+// LANDING
+// ═══════════════════════════════════════════════════
+function renderLanding(){
+  return `
+  <div class="hero">
+    <div class="hero-eyebrow">🇨🇦 Built for Niagara Region</div>
+    <h1>Hire <em>Verified.</em><br>Get <em>Hired.</em></h1>
+    <p class="hero-sub">ProofHire connects Niagara employers with pre-verified candidates — eliminating unqualified applications and the black hole of silence that job seekers face every day.</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="navigate('employer-auth')">I'm Hiring →</button>
+      <button class="btn-outline" onclick="navigate('seeker-auth')">I'm Looking for Work →</button>
+    </div>
+    <div style="margin-top:24px">
+      <button class="btn-dark btn-sm" onclick="navigate('job-board')">Browse Open Jobs →</button>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num">8.4%</div><div class="stat-label">Niagara unemployment rate — above provincial average</div></div>
+    <div class="stat-item"><div class="stat-num">400+</div><div class="stat-label">Average applicants per manufacturing job posting</div></div>
+    <div class="stat-item"><div class="stat-num">73%</div><div class="stat-label">Job seekers never hear back from employers they apply to</div></div>
+  </div>
+
+  <div class="how-section">
+    <h2>How ProofHire Works</h2>
+    <p class="sub">One platform. Two sides of the same problem. Both solved.</p>
+    <div class="how-cols">
+      <div class="how-side">
+        <h3><span class="badge badge-gold">For Employers</span></h3>
+        <div class="how-step"><div class="how-num">1</div><div class="how-step-text"><strong>Post your job with requirements</strong><span>Add certifications required, knockout questions, and role details.</span></div></div>
+        <div class="how-step"><div class="how-num">2</div><div class="how-step-text"><strong>Candidates self-screen</strong><span>Applicants answer knockout questions before submitting. Wrong answer — they're out immediately.</span></div></div>
+        <div class="how-step"><div class="how-num">3</div><div class="how-step-text"><strong>See only verified matches</strong><span>Your dashboard shows passed candidates with certifications confirmed. No noise. No wasted interviews.</span></div></div>
+        <div class="how-step"><div class="how-num">4</div><div class="how-step-text"><strong>Shortlist and hire</strong><span>One click to shortlist. One click to reject. Your pipeline moves fast.</span></div></div>
+      </div>
+      <div class="how-side">
+        <h3><span class="badge badge-blue">For Job Seekers</span></h3>
+        <div class="how-step"><div class="how-num">1</div><div class="how-step-text"><strong>Build your verified profile once</strong><span>Upload your certifications — WHMIS, Forklift, Smart Serve, Food Handler, and more.</span></div></div>
+        <div class="how-step"><div class="how-num">2</div><div class="how-step-text"><strong>Browse real Niagara jobs</strong><span>Every listing shows exactly what's required — no surprises, no wasted applications.</span></div></div>
+        <div class="how-step"><div class="how-num">3</div><div class="how-step-text"><strong>Apply with confidence</strong><span>If you meet the requirements, you'll know before you apply. No black hole.</span></div></div>
+        <div class="how-step"><div class="how-num">4</div><div class="how-step-text"><strong>Know exactly where you stand</strong><span>Pass or knockout — you always get a clear, specific reason. No silence. Ever.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diff-section">
+    <div class="diff-inner">
+      <h2>Why ProofHire is Different</h2>
+      <div class="diff-grid">
+        <div class="diff-card">
+          <div class="diff-icon">✅</div>
+          <h4>Certification Verification</h4>
+          <p>Candidates upload real documents — WHMIS, Forklift, Smart Serve, Working at Heights. Employers only see people who already have what the job requires.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">🚫</div>
+          <h4>Knockout Questions</h4>
+          <p>Dealbreaker questions filter out unqualified applicants before they reach your dashboard. You set the rules. The platform enforces them automatically.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">💬</div>
+          <h4>Zero Silence Policy</h4>
+          <p>Every applicant — passed or knocked out — receives a specific explanation. No more black holes. Job seekers know exactly what to fix.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">📍</div>
+          <h4>Niagara-First</h4>
+          <p>Built specifically for the Niagara region's manufacturing, trades, and hospitality sectors. Not a national platform pretending to be local.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">⚡</div>
+          <h4>Real-Time Pipeline</h4>
+          <p>Applications appear in your employer dashboard the moment they're submitted. Watch your verified pipeline grow without refreshing a spreadsheet.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">🤝</div>
+          <h4>Both Sides Win</h4>
+          <p>Every other platform serves employers. ProofHire serves both. Seekers get transparency. Employers get quality. The match happens because both sides have what they need.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Ready to stop wasting time?</h2>
+    <p>Join Niagara employers and job seekers who are done with the noise.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn-gold" style="padding:14px 32px;font-size:16px;border-radius:10px" onclick="navigate('employer-auth')">Post Your First Job Free →</button>
+      <button class="btn-outline" style="padding:13px 32px;font-size:16px;border-radius:10px" onclick="navigate('seeker-auth')">Create Your Verified Profile →</button>
+    </div>
+    <p style="margin-top:20px;font-size:13px;color:var(--muted)">Demo credentials — Employer: demo@proofhire.com / Demo@1234</p>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// EMPLOYER AUTH
+// ═══════════════════════════════════════════════════
+function renderEmployerAuth(){
+  return `<div class="page-sm">
+    <div class="auth-card">
+      <div class="auth-logo"><div class="logo-big">Proof<span>Hire</span></div>
+        <p style="color:var(--muted);font-size:14px;margin-top:6px">Employer Portal</p>
+      </div>
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign In</div>
+        <div class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</div>
+      </div>
+      <div id="auth-login-form">
+        <div id="login-err"></div>
+        <div class="form-group"><label>Email Address</label><input id="emp-email" type="email" placeholder="demo@proofhire.com" value="demo@proofhire.com"></div>
+        <div class="form-group"><label>Password</label><input id="emp-pass" type="password" placeholder="••••••••" value="Demo@1234"></div>
+        <button class="btn-gold" style="width:100%;padding:13px" onclick="employerLogin()">Sign In to Dashboard →</button>
+        <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted)">Demo: demo@proofhire.com / Demo@1234</p>
+      </div>
+      <div id="auth-register-form" style="display:none">
+        <div id="register-err"></div>
+        <div class="grid-2">
+          <div class="form-group"><label>Your Name</label><input id="reg-name" placeholder="Full name"></div>
+          <div class="form-group"><label>Company Name</label><input id="reg-company" placeholder="Company"></div>
+        </div>
+        <div class="form-group"><label>Email</label><input id="reg-email" type="email" placeholder="you@company.com"></div>
+        <div class="form-group"><label>Password</label><input id="reg-pass" type="password" placeholder="Min 8 characters"></div>
+        <div class="form-group"><label>Sector</label><select id="reg-sector"><option>Manufacturing</option><option>Hospitality / Food Service</option><option>Retail</option><option>Healthcare / PSW</option><option>Other</option></select></div>
+        <button class="btn-gold" style="width:100%;padding:13px" onclick="employerRegister()">Create Employer Account →</button>
+      </div>
+      <div style="text-align:center;margin-top:20px">
+        <span style="font-size:13px;color:var(--muted)">Looking for work? </span>
+        <span style="font-size:13px;color:var(--gold);cursor:pointer" onclick="navigate('seeker-auth')">Job seeker login →</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// SEEKER AUTH
+// ═══════════════════════════════════════════════════
+function renderSeekerAuth(){
+  return `<div class="page-sm">
+    <div class="auth-card">
+      <div class="auth-logo"><div class="logo-big">Proof<span>Hire</span></div>
+        <p style="color:var(--muted);font-size:14px;margin-top:6px">Job Seeker Portal</p>
+      </div>
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign In</div>
+        <div class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Create Profile</div>
+      </div>
+      <div id="auth-login-form">
+        <div id="login-err"></div>
+        <div class="form-group"><label>Email Address</label><input id="sk-email" type="email" placeholder="jordan@demo.com" value="jordan@demo.com"></div>
+        <div class="form-group"><label>Password</label><input id="sk-pass" type="password" placeholder="••••••••" value="Demo@1234"></div>
+        <button class="btn-gold" style="width:100%;padding:13px" onclick="seekerLogin()">Sign In →</button>
+        <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted)">Demo: jordan@demo.com / Demo@1234</p>
+      </div>
+      <div id="auth-register-form" style="display:none">
+        <div id="register-err"></div>
+        <div class="grid-2">
+          <div class="form-group"><label>First & Last Name</label><input id="sreg-name" placeholder="Full name"></div>
+          <div class="form-group"><label>Phone</label><input id="sreg-phone" placeholder="905-555-0000"></div>
+        </div>
+        <div class="form-group"><label>Email</label><input id="sreg-email" type="email" placeholder="you@email.com"></div>
+        <div class="form-group"><label>Password</label><input id="sreg-pass" type="password" placeholder="Min 8 characters"></div>
+        <div class="form-group"><label>City / Town</label><input id="sreg-location" placeholder="e.g. St. Catharines, ON"></div>
+        <div class="form-group"><label>Primary Sector</label><select id="sreg-sector"><option>Manufacturing</option><option>Hospitality / Food Service</option><option>Retail</option><option>Healthcare / PSW</option><option>Trades</option></select></div>
+        <button class="btn-gold" style="width:100%;padding:13px" onclick="seekerRegister()">Create My Verified Profile →</button>
+      </div>
+      <div style="text-align:center;margin-top:20px">
+        <span style="font-size:13px;color:var(--muted)">Hiring? </span>
+        <span style="font-size:13px;color:var(--gold);cursor:pointer" onclick="navigate('employer-auth')">Employer login →</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// EMPLOYER DASHBOARD
+// ═══════════════════════════════════════════════════
+function renderDashboard(){
+  if(!state.currentUser || state.userType!=='employer') return `<div class="page"><div class="empty-state"><div class="icon">🔒</div><p>Please sign in as an employer.</p><br><button class="btn-gold" onclick="navigate('employer-auth')">Sign In</button></div></div>`;
+  const emp = state.currentUser;
+  const jobs = getEmployerJobs(emp.id);
+  let totalApps=0, totalPassed=0, totalShortlisted=0;
+  jobs.forEach(j=>{
+    const apps = getJobApplications(j.id);
+    totalApps += apps.length;
+    totalPassed += apps.filter(a=>a.status==='passed').length;
+    totalShortlisted += apps.filter(a=>a.shortlisted).length;
+  });
+
+  const jobRows = jobs.length ? jobs.map(j=>{
+    const apps = getJobApplications(j.id);
+    const passed = apps.filter(a=>a.status==='passed').length;
+    const knocked = apps.filter(a=>a.status==='knocked').length;
+    return `<div class="table-row">
+      <div class="job-title-cell"><strong>${j.title}</strong><span>${j.location} · ${j.type}</span></div>
+      <div><span class="tag">${j.sector}</span></div>
+      <div style="font-size:14px">${apps.length}</div>
+      <div><span class="badge badge-green">${passed} passed</span></div>
+      <div><span class="badge badge-red">${knocked} out</span></div>
+      <div><button class="btn-gold btn-sm" onclick="navigate('job-detail',{jobId:'${j.id}'})">View →</button></div>
+    </div>`;
+  }).join('') : `<div class="empty-state"><div class="icon">📋</div><p>No jobs posted yet.</p></div>`;
+
+  return `<div class="page">
+    <div class="dash-header">
+      <div>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:4px">Welcome back,</p>
+        <div class="dash-title">${emp.company}</div>
+      </div>
+      <button class="btn-gold" onclick="navigate('post-job')">+ Post New Job</button>
+    </div>
+    <div class="stats-cards">
+      <div class="stat-card"><div class="num">${jobs.length}</div><div class="lbl">Active Jobs</div></div>
+      <div class="stat-card"><div class="num">${totalApps}</div><div class="lbl">Total Applications</div></div>
+      <div class="stat-card"><div class="num" style="color:var(--green)">${totalPassed}</div><div class="lbl">Passed Verification</div></div>
+      <div class="stat-card"><div class="num" style="color:var(--gold)">${totalShortlisted}</div><div class="lbl">Shortlisted</div></div>
+    </div>
+    <div class="section-title">Your Job Postings</div>
+    <div class="jobs-table">
+      <div class="table-header"><div>Job Title</div><div>Sector</div><div>Total Apps</div><div>Passed</div><div>Knocked Out</div><div>Actions</div></div>
+      ${jobRows}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// JOB DETAIL
+// ═══════════════════════════════════════════════════
+function renderJobDetail(){
+  if(!state.currentUser || state.userType!=='employer') return `<div class="page"><div class="empty-state"><button class="btn-gold" onclick="navigate('employer-auth')">Sign In</button></div></div>`;
+  const job = getJob(state.routeParams.jobId);
+  if(!job) return `<div class="page"><div class="empty-state"><div class="icon">❌</div><p>Job not found.</p></div></div>`;
+  const apps = getJobApplications(job.id);
+  const passed = apps.filter(a=>a.status==='passed');
+  const knocked = apps.filter(a=>a.status==='knocked');
+
+  const passedRows = passed.length ? passed.map(a=>{
+    const s = getSeeker(a.seekerId);
+    if(!s) return '';
+    return `<div class="applicant-row">
+      <div class="applicant-info">
+        <strong>${s.name}</strong>
+        <span>${s.location} · ${s.sector}</span>
+        <div class="cert-list">${s.certs.map(c=>`<span class="badge badge-green">✓ ${c}</span>`).join('')}</div>
+      </div>
+      <div class="applicant-actions">
+        <button class="${a.shortlisted?'btn-gold':'btn-green'} btn-sm" onclick="toggleShortlist('${a.id}')">${a.shortlisted?'★ Shortlisted':'☆ Shortlist'}</button>
+      </div>
+    </div>`;
+  }).join('') : `<div class="empty-state" style="padding:40px"><div class="icon">👤</div><p style="font-size:13px">No passed applicants yet.</p></div>`;
+
+  const knockedRows = knocked.length ? knocked.map(a=>{
+    const s = getSeeker(a.seekerId);
+    if(!s) return '';
+    return `<div class="applicant-row">
+      <div class="applicant-info">
+        <strong>${s.name}</strong>
+        <span>${s.location}</span>
+        <div class="knockout-reason">✕ ${a.knockoutReason||'Did not meet knockout criteria.'}</div>
+      </div>
+      <div><span class="badge badge-red">Knocked Out</span></div>
+    </div>`;
+  }).join('') : `<div class="empty-state" style="padding:40px"><div class="icon">🎯</div><p style="font-size:13px">No knockouts yet.</p></div>`;
+
+  const publicUrl = `#apply/${job.id}`;
+  return `<div class="page">
+    <div class="back-link" onclick="navigate('employer-dashboard')">← Back to Dashboard</div>
+    <div class="detail-header">
+      <h1>${job.title}</h1>
+      <div class="detail-meta">
+        <span class="badge badge-green">Active</span>
+        <span class="tag">📍 ${job.location}</span>
+        <span class="tag">💰 ${job.salary}</span>
+        <span class="tag">⏱ ${job.type}</span>
+        <span class="tag">📅 Posted ${job.posted}</span>
+      </div>
+      <div style="margin-top:16px;padding:12px 16px;background:var(--black);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:3px">Public Application Link</p>
+          <p style="font-size:13px;color:var(--gold);font-family:monospace">proofhire.app/jobs/${job.id}</p>
+        </div>
+        <button class="btn-dark btn-sm" onclick="openPublicJob('${job.id}')">Open Public View →</button>
+      </div>
+    </div>
+    <div class="split-panel">
+      <div class="panel">
+        <div class="panel-header">
+          <h3><span style="color:var(--green)">✓</span> Passed Verification <span class="badge badge-green">${passed.length}</span></h3>
+        </div>
+        ${passedRows}
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <h3><span style="color:var(--red)">✕</span> Knocked Out <span class="badge badge-red">${knocked.length}</span></h3>
+        </div>
+        ${knockedRows}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// POST JOB
+// ═══════════════════════════════════════════════════
+function renderPostJob(){
+  if(!state.currentUser || state.userType!=='employer') return `<div class="page"><div class="empty-state"><button class="btn-gold" onclick="navigate('employer-auth')">Sign In</button></div></div>`;
+  return `<div class="page-md">
+    <div class="back-link" onclick="navigate('employer-dashboard')">← Dashboard</div>
+    <div class="section-title">Post a New Job</div>
+    <div class="card">
+      <div id="post-err"></div>
+      <div class="form-group"><label>Job Title</label><input id="pj-title" placeholder="e.g. Forklift Operator, Line Cook, PSW"></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Sector</label><select id="pj-sector"><option>Manufacturing</option><option>Hospitality / Food Service</option><option>Trades</option><option>Healthcare / PSW</option><option>Retail</option></select></div>
+        <div class="form-group"><label>Employment Type</label><select id="pj-type"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Seasonal</option></select></div>
+      </div>
+      <div class="grid-2">
+        <div class="form-group"><label>Location</label><input id="pj-location" placeholder="e.g. Welland, ON" value="Niagara Region, ON"></div>
+        <div class="form-group"><label>Salary / Wage</label><input id="pj-salary" placeholder="e.g. $22–$26/hr"></div>
+      </div>
+      <div class="form-group"><label>Job Description</label><textarea id="pj-desc" rows="4" placeholder="Describe the role, responsibilities, environment..."></textarea></div>
+      <div class="form-group"><label>Required Certifications (comma-separated)</label><input id="pj-reqs" placeholder="e.g. WHMIS 2015, Forklift Certification, Smart Serve"></div>
+      <div class="divider"></div>
+      <div style="margin-bottom:16px">
+        <div style="font-size:16px;font-weight:700;margin-bottom:6px">Knockout Questions</div>
+        <p style="font-size:13px;color:var(--muted2)">Wrong answer = automatic knockout. Applicant is told exactly why.</p>
+      </div>
+      <div id="ko-questions-list">
+        <div class="ko-builder" id="ko-0">
+          <div class="ko-header"><span>Question 1</span><button class="btn-dark btn-sm" onclick="removeKO(0)">Remove</button></div>
+          <div class="form-group"><label>Question</label><input class="ko-q" placeholder="e.g. Do you hold a valid Ontario Forklift certificate?"></div>
+          <div class="grid-2">
+            <div class="form-group"><label>Correct Answer (required to pass)</label><input class="ko-correct" placeholder="e.g. Yes"></div>
+            <div class="form-group"><label>Other Options (comma-separated)</label><input class="ko-others" placeholder="e.g. No, In progress"></div>
+          </div>
+        </div>
+      </div>
+      <button class="btn-dark" style="width:100%;margin-bottom:24px" onclick="addKOQuestion()">+ Add Knockout Question</button>
+      <button class="btn-gold" style="width:100%;padding:13px" onclick="submitJob()">Publish Job Posting →</button>
+    </div>
+  </div>`;
+}
+
+let koCount = 1;
+function addKOQuestion(){
+  const list = document.getElementById('ko-questions-list');
+  const div = document.createElement('div');
+  div.className = 'ko-builder';
+  div.id = `ko-${koCount}`;
+  div.innerHTML = `<div class="ko-header"><span>Question ${koCount+1}</span><button class="btn-dark btn-sm" onclick="removeKO(${koCount})">Remove</button></div>
+    <div class="form-group"><label>Question</label><input class="ko-q" placeholder="Knockout question..."></div>
+    <div class="grid-2">
+      <div class="form-group"><label>Correct Answer</label><input class="ko-correct" placeholder="e.g. Yes"></div>
+      <div class="form-group"><label>Other Options (comma-separated)</label><input class="ko-others" placeholder="e.g. No, Maybe"></div>
+    </div>`;
+  list.appendChild(div);
+  koCount++;
+}
+function removeKO(id){ const el = document.getElementById(`ko-${id}`); if(el) el.remove(); }
+
+function submitJob(){
+  const title = document.getElementById('pj-title').value.trim();
+  const desc = document.getElementById('pj-desc').value.trim();
+  if(!title){ document.getElementById('post-err').innerHTML='<div class="alert alert-err">Job title is required.</div>'; return; }
+  const koBuilders = document.querySelectorAll('.ko-builder');
+  const kqs = [];
+  koBuilders.forEach((b,i)=>{
+    const q = b.querySelector('.ko-q').value.trim();
+    const correct = b.querySelector('.ko-correct').value.trim();
+    const others = b.querySelector('.ko-others').value.split(',').map(s=>s.trim()).filter(Boolean);
+    if(q && correct){ kqs.push({ id:`nkq${Date.now()}${i}`, question:q, correctAnswer:correct, options:[correct, ...others] }); }
+  });
+  const reqs = document.getElementById('pj-reqs').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const newJob = {
+    id: `j${Date.now()}`, employerId: state.currentUser.id,
+    title, sector: document.getElementById('pj-sector').value,
+    location: document.getElementById('pj-location').value,
+    salary: document.getElementById('pj-salary').value,
+    type: document.getElementById('pj-type').value,
+    description: desc, requirements: reqs,
+    knockoutQuestions: kqs, active: true,
+    posted: new Date().toISOString().split('T')[0],
+  };
+  db.jobs.push(newJob);
+  koCount = 1;
+  showToast('✓ Job posted successfully!');
+  navigate('employer-dashboard');
+}
+
+// ═══════════════════════════════════════════════════
+// JOB BOARD (PUBLIC)
+// ═══════════════════════════════════════════════════
+function renderJobBoard(){
+  const filter = state.routeParams.filter || '';
+  const search = state.routeParams.search || '';
+  let jobs = db.jobs.filter(j=>j.active);
+  if(filter) jobs = jobs.filter(j=>j.sector===filter);
+  if(search) jobs = jobs.filter(j=>j.title.toLowerCase().includes(search.toLowerCase())||j.description.toLowerCase().includes(search.toLowerCase()));
+
+  const cards = jobs.map(j=>{
+    const emp = getEmployer(j.employerId);
+    const apps = getJobApplications(j.id);
+    return `<div class="job-card" onclick="navigate('apply',{jobId:'${j.id}'})">
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap">
+          <h3>${j.title}</h3>
+          <span class="badge badge-gold">${j.type}</span>
+        </div>
+        <div class="job-card-meta" style="margin-top:6px">
+          <span class="tag">🏢 ${emp?emp.company:''}</span>
+          <span class="tag">📍 ${j.location}</span>
+          <span class="tag">💰 ${j.salary}</span>
+        </div>
+      </div>
+      <p>${j.description.substring(0,120)}...</p>
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600">REQUIRED CERTIFICATIONS</p>
+        <div class="req-list">${j.requirements.map(r=>`<span class="badge badge-blue">✓ ${r}</span>`).join('')}</div>
+      </div>
+      <div class="job-card-footer">
+        <span style="font-size:12px;color:var(--muted)">${apps.length} applicant${apps.length!==1?'s':''}</span>
+        <button class="btn-gold btn-sm">Apply Now →</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="page">
+    <div style="margin-bottom:28px">
+      <div style="font-size:28px;font-weight:800;margin-bottom:6px">Open Jobs in Niagara</div>
+      <p style="color:var(--muted2)">Every job shows exactly what you need. No surprises. No wasted applications.</p>
+    </div>
+    <div class="search-bar">
+      <input id="search-input" placeholder="Search jobs..." value="${search}" oninput="liveSearch(this.value)">
+      <select id="sector-filter" onchange="filterSector(this.value)">
+        <option value="">All Sectors</option>
+        <option value="Manufacturing" ${filter==='Manufacturing'?'selected':''}>Manufacturing</option>
+        <option value="Hospitality / Food Service" ${filter==='Hospitality / Food Service'?'selected':''}>Hospitality / Food Service</option>
+        <option value="Trades" ${filter==='Trades'?'selected':''}>Trades</option>
+        <option value="Healthcare / PSW" ${filter==='Healthcare / PSW'?'selected':''}>Healthcare / PSW</option>
+      </select>
+    </div>
+    <div class="jobs-grid">${cards || `<div class="empty-state" style="grid-column:1/-1"><div class="icon">🔍</div><p>No jobs match your search.</p></div>`}</div>
+    ${!state.currentUser?`<div style="text-align:center;margin-top:40px;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius)">
+      <p style="font-size:16px;font-weight:700;margin-bottom:8px">Know your certifications match? Apply faster.</p>
+      <p style="color:var(--muted2);font-size:14px;margin-bottom:16px">Create a verified profile to skip re-entering your details every time.</p>
+      <button class="btn-gold" onclick="navigate('seeker-auth')">Create Free Profile →</button>
+    </div>`:''}
+  </div>`;
+}
+
+function liveSearch(val){ navigate('job-board',{ search: val, filter: state.routeParams.filter||'' }); }
+function filterSector(val){ navigate('job-board',{ filter: val, search: state.routeParams.search||'' }); }
+
+// ═══════════════════════════════════════════════════
+// APPLICATION FORM
+// ═══════════════════════════════════════════════════
+function renderApplyForm(){
+  const job = getJob(state.routeParams.jobId);
+  if(!job) return `<div class="page"><div class="empty-state"><div class="icon">❌</div><p>Job not found.</p></div></div>`;
+  const emp = getEmployer(job.employerId);
+  const seeker = state.currentUser && state.userType==='seeker' ? state.currentUser : null;
+
+  const certChecks = job.requirements.map((r,i)=>`
+    <label class="cert-check" id="cert-check-${i}" onclick="toggleCertCheck(${i})">
+      <input type="checkbox" id="cert-${i}" onclick="event.stopPropagation()"> ${r}
+    </label>`).join('');
+
+  const koQs = job.knockoutQuestions.map((q,i)=>`
+    <div class="ko-question">
+      <p>${i+1}. ${q.question}</p>
+      <div class="ko-options">
+        ${q.options.map((opt,oi)=>`
+          <label class="ko-opt" id="ko-opt-${i}-${oi}" onclick="selectKOOption(${i},${oi})">
+            <input type="radio" name="ko-${i}" value="${opt}"> ${opt}
+          </label>`).join('')}
+      </div>
+    </div>`).join('');
+
+  return `<div class="page-md">
+    <div class="back-link" onclick="navigate('job-board')">← Back to Jobs</div>
+    <div class="apply-header">
+      <h1>${job.title}</h1>
+      <div class="detail-meta" style="margin-top:8px">
+        <span class="tag">🏢 ${emp?emp.company:''}</span>
+        <span class="tag">📍 ${job.location}</span>
+        <span class="tag">💰 ${job.salary}</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted2);margin-top:12px">${job.description}</p>
+    </div>
+    <div class="card" style="margin-bottom:20px">
+      <div id="apply-err"></div>
+      ${!seeker?`
+      <div style="margin-bottom:24px">
+        <div style="font-size:16px;font-weight:700;margin-bottom:16px">Your Information</div>
+        <div class="grid-2">
+          <div class="form-group"><label>Full Name</label><input id="app-name" placeholder="Your full name"></div>
+          <div class="form-group"><label>Phone</label><input id="app-phone" placeholder="905-555-0000"></div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group"><label>Email</label><input id="app-email" type="email" placeholder="your@email.com"></div>
+          <div class="form-group"><label>City / Town</label><input id="app-location" placeholder="e.g. St. Catharines"></div>
+        </div>
+        <div class="form-group"><label>Brief Experience Summary</label><textarea id="app-exp" rows="2" placeholder="e.g. 4 years forklift operator, Welland manufacturing..."></textarea></div>
+      </div>
+      <div class="divider"></div>
+      `:`<div style="background:var(--green-bg);border:1px solid #14532d;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:14px;color:#86efac">✓ Applying as <strong>${seeker.name}</strong> — your verified profile will be attached.</div>`}
+
+      <div style="margin-bottom:20px">
+        <div style="font-size:16px;font-weight:700;margin-bottom:6px">Certification Check</div>
+        <p style="font-size:13px;color:var(--muted2);margin-bottom:12px">Check all certifications you currently hold. Employers can verify these.</p>
+        <div class="cert-check-grid">${certChecks}</div>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <div style="font-size:16px;font-weight:700;margin-bottom:6px">Screening Questions</div>
+        <p style="font-size:13px;color:var(--muted2);margin-bottom:16px">Answer honestly. These questions determine if you qualify for this role. If you don't meet a requirement, you'll be told exactly why.</p>
+        ${koQs}
+      </div>
+      <button class="btn-gold" style="width:100%;padding:14px;margin-top:8px;font-size:16px" onclick="submitApplication('${job.id}')">Submit Application →</button>
+    </div>
+  </div>`;
+}
+
+function toggleCertCheck(i){
+  const cb = document.getElementById(`cert-${i}`);
+  const label = document.getElementById(`cert-check-${i}`);
+  cb.checked = !cb.checked;
+  label.classList.toggle('checked', cb.checked);
+}
+function selectKOOption(qi, oi){
+  const opts = document.querySelectorAll(`[id^="ko-opt-${qi}-"]`);
+  opts.forEach(o=>o.classList.remove('selected'));
+  const selected = document.getElementById(`ko-opt-${qi}-${oi}`);
+  if(selected){
+    selected.classList.add('selected');
+    selected.querySelector('input').checked = true;
+  }
+}
+
+function submitApplication(jobId){
+  const job = getJob(jobId);
+  if(!job) return;
+  const seeker = state.currentUser && state.userType==='seeker' ? state.currentUser : null;
+  let applicantName, applicantId;
+
+  if(seeker){
+    applicantName = seeker.name;
+    applicantId = seeker.id;
+  } else {
+    applicantName = document.getElementById('app-name')?.value.trim();
+    if(!applicantName){ document.getElementById('apply-err').innerHTML='<div class="alert alert-err">Please enter your name.</div>'; return; }
+    // Create a temporary guest seeker
+    const guestId = `guest-${Date.now()}`;
+    const guestSeeker = {
+      id: guestId, name: applicantName,
+      email: document.getElementById('app-email')?.value||'',
+      phone: document.getElementById('app-phone')?.value||'',
+      location: document.getElementById('app-location')?.value||'Niagara Region',
+      sector: job.sector, experience: document.getElementById('app-exp')?.value||'',
+      certs: [], availability:'Full-time', transport:false,
+    };
+    // get checked certs
+    job.requirements.forEach((r,i)=>{ const cb=document.getElementById(`cert-${i}`); if(cb&&cb.checked) guestSeeker.certs.push(r); });
+    db.seekers.push(guestSeeker);
+    applicantId = guestId;
+  }
+
+  // Evaluate knockout questions
+  const koResults = [];
+  let knockedOut = false;
+  let knockoutReason = '';
+  job.knockoutQuestions.forEach((q,i)=>{
+    const selected = document.querySelector(`input[name="ko-${i}"]:checked`);
+    const answer = selected ? selected.value : '';
+    const passed = answer === q.correctAnswer;
+    koResults.push({ id: q.id, answer, passed });
+    if(!passed && !knockedOut){
+      knockedOut = true;
+      knockoutReason = answer
+        ? `You answered "${answer}" — this role requires: "${q.correctAnswer}".`
+        : `Question ${i+1} was not answered.`;
+    }
+  });
+
+  if(job.knockoutQuestions.length > 0 && koResults.some(r=>!r.answer)){
+    document.getElementById('apply-err').innerHTML='<div class="alert alert-err">Please answer all screening questions.</div>';
+    return;
+  }
+
+  const appId = `a${Date.now()}`;
+  const newApp = {
+    id: appId, jobId, seekerId: applicantId,
+    status: knockedOut ? 'knocked' : 'passed',
+    appliedAt: new Date().toISOString().split('T')[0],
+    koResults, knockoutReason, shortlisted: false,
+  };
+  db.applications.push(newApp);
+  db.pendingApp = { app: newApp, job, knockedOut, knockoutReason };
+  navigate('apply-result', { appId });
+}
+
+// ═══════════════════════════════════════════════════
+// APPLY RESULT
+// ═══════════════════════════════════════════════════
+function renderApplyResult(){
+  const data = db.pendingApp;
+  if(!data) return `<div class="page"><div class="empty-state"><p>No result to display.</p><br><button class="btn-gold" onclick="navigate('job-board')">Browse Jobs</button></div></div>`;
+  const { job, knockedOut, knockoutReason } = data;
+
+  if(knockedOut){
+    return `<div class="result-page">
+      <div class="result-icon">🚫</div>
+      <h1 style="color:var(--red)">Not Qualified for This Role</h1>
+      <p>Your application was reviewed against the requirements for <strong>${job.title}</strong>. Unfortunately, you did not meet one or more dealbreaker criteria.</p>
+      <div class="result-detail">
+        <p style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">Why you were knocked out</p>
+        <p style="font-size:15px;color:var(--red)">${knockoutReason}</p>
+        <div class="divider"></div>
+        <p style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">What this job required</p>
+        <div style="display:flex;flex-direction:column;gap:6px">${job.requirements.map(r=>`<span class="badge badge-blue" style="justify-content:flex-start">✓ ${r}</span>`).join('')}</div>
+      </div>
+      <p style="font-size:14px;color:var(--muted2)">Unlike other platforms, we tell you exactly why so you can work toward this role in the future.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+        <button class="btn-gold" onclick="navigate('job-board')">Browse Other Jobs</button>
+        <button class="btn-outline" onclick="navigate('seeker-auth')">Build Verified Profile</button>
+      </div>
+    </div>`;
+  } else {
+    return `<div class="result-page">
+      <div class="result-icon">🎉</div>
+      <h1 style="color:var(--green)">You Passed Verification!</h1>
+      <p>Your application for <strong>${job.title}</strong> at <strong>${getEmployer(job.employerId)?.company||''}</strong> has been submitted. You cleared all knockout criteria and are now visible in the employer's verified candidate list.</p>
+      <div class="result-detail">
+        <p style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">What happens next</p>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:10px;align-items:flex-start"><span class="badge badge-green">1</span><span style="font-size:14px">The employer reviews verified candidates and shortlists those they want to interview.</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span class="badge badge-green">2</span><span style="font-size:14px">If shortlisted, you will receive a direct email or phone call to arrange an interview.</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span class="badge badge-green">3</span><span style="font-size:14px">No more silence — if you are not selected, you will be notified.</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+        <button class="btn-gold" onclick="navigate('job-board')">Browse More Jobs</button>
+        ${!state.currentUser?`<button class="btn-outline" onclick="navigate('seeker-auth')">Save Profile for Next Time</button>`:''}
+      </div>
+    </div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// SEEKER PROFILE
+// ═══════════════════════════════════════════════════
+function renderSeekerProfile(){
+  if(!state.currentUser || state.userType!=='seeker') return `<div class="page"><div class="empty-state"><button class="btn-gold" onclick="navigate('seeker-auth')">Sign In</button></div></div>`;
+  const s = state.currentUser;
+  const allCerts = ['WHMIS 2015','Forklift Certification','Working at Heights','First Aid CPR','Class G License','Food Handler Certification','Smart Serve','Machinist Certificate (433A)','PSW Certificate','OSSD / Diploma'];
+  return `<div class="page-md">
+    <div class="section-title">My Verified Profile</div>
+    <div class="card" style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:24px">
+        <div style="width:64px;height:64px;border-radius:50%;background:var(--gold-bg);border:2px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:var(--gold);flex-shrink:0">${s.name[0]}</div>
+        <div>
+          <div style="font-size:22px;font-weight:800">${s.name}</div>
+          <div style="color:var(--muted2);font-size:14px">${s.location} · ${s.sector}</div>
+        </div>
+        <button class="btn-green" style="margin-left:auto" onclick="saveProfile()">Save Changes</button>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:16px">Basic Information</div>
+      <div class="grid-2">
+        <div class="form-group"><label>Full Name</label><input id="prof-name" value="${s.name}"></div>
+        <div class="form-group"><label>Phone</label><input id="prof-phone" value="${s.phone||''}"></div>
+      </div>
+      <div class="grid-2">
+        <div class="form-group"><label>City / Town</label><input id="prof-location" value="${s.location}"></div>
+        <div class="form-group"><label>Primary Sector</label><select id="prof-sector">
+          ${['Manufacturing','Hospitality / Food Service','Trades','Healthcare / PSW','Retail'].map(sec=>`<option ${sec===s.sector?'selected':''}>${sec}</option>`).join('')}
+        </select></div>
+      </div>
+      <div class="form-group"><label>Experience Summary</label><textarea id="prof-exp" rows="3">${s.experience||''}</textarea></div>
+      <div class="divider"></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:6px">My Certifications</div>
+      <p style="font-size:13px;color:var(--muted2);margin-bottom:14px">Check all certificates you currently hold. These will be verified on your applications.</p>
+      <div class="cert-check-grid">
+        ${allCerts.map((cert,i)=>{
+          const has = s.certs.includes(cert);
+          return `<label class="cert-check ${has?'checked':''}" id="pcert-check-${i}" onclick="toggleProfileCert(${i}, '${cert.replace(/'/g,"\\'")}')">
+            <input type="checkbox" id="pcert-${i}" ${has?'checked':''} onclick="event.stopPropagation()"> ${cert}
+          </label>`;
+        }).join('')}
+      </div>
+      <div class="divider"></div>
+      <div class="form-group">
+        <label>Availability</label>
+        <select id="prof-avail">
+          ${['Full-time','Part-time','Full-time / Weekends','Flexible','Shift work OK'].map(a=>`<option ${a===s.availability?'selected':''}>${a}</option>`).join('')}
+        </select>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <input type="checkbox" id="prof-transport" style="width:auto" ${s.transport?'checked':''}>
+        <label style="margin:0;font-size:14px;color:var(--white)">I have reliable transportation to work</label>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleProfileCert(i, cert){
+  const cb = document.getElementById(`pcert-${i}`);
+  const label = document.getElementById(`pcert-check-${i}`);
+  cb.checked = !cb.checked;
+  label.classList.toggle('checked', cb.checked);
+  if(cb.checked){ if(!state.currentUser.certs.includes(cert)) state.currentUser.certs.push(cert); }
+  else { state.currentUser.certs = state.currentUser.certs.filter(c=>c!==cert); }
+}
+
+function saveProfile(){
+  const s = state.currentUser;
+  s.name = document.getElementById('prof-name').value;
+  s.phone = document.getElementById('prof-phone').value;
+  s.location = document.getElementById('prof-location').value;
+  s.sector = document.getElementById('prof-sector').value;
+  s.experience = document.getElementById('prof-exp').value;
+  s.availability = document.getElementById('prof-avail').value;
+  s.transport = document.getElementById('prof-transport').checked;
+  showToast('✓ Profile saved!');
+  render();
+}
+
+// ═══════════════════════════════════════════════════
+// SEEKER DASHBOARD
+// ═══════════════════════════════════════════════════
+function renderSeekerDashboard(){
+  if(!state.currentUser || state.userType!=='seeker') return `<div class="page"><div class="empty-state"><button class="btn-gold" onclick="navigate('seeker-auth')">Sign In</button></div></div>`;
+  const s = state.currentUser;
+  const apps = getSeekerApplications(s.id);
+  const passed = apps.filter(a=>a.status==='passed').length;
+  const knocked = apps.filter(a=>a.status==='knocked').length;
+
+  const appList = apps.length ? apps.map(a=>{
+    const job = getJob(a.jobId);
+    if(!job) return '';
+    const emp = getEmployer(job.employerId);
+    return `<div class="applicant-row">
+      <div class="applicant-info">
+        <strong>${job.title}</strong>
+        <span>${emp?emp.company:''} · ${job.location}</span>
+        <div style="margin-top:6px"><span style="font-size:12px;color:var(--muted)">Applied ${a.appliedAt}</span></div>
+        ${a.status==='knocked'?`<div class="knockout-reason" style="margin-top:4px">✕ ${a.knockoutReason}</div>`:''}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+        <span class="badge ${a.status==='passed'?'badge-green':'badge-red'}">${a.status==='passed'?'✓ Passed':'✕ Knocked Out'}</span>
+        ${a.shortlisted?`<span class="badge badge-gold">★ Shortlisted</span>`:''}
+      </div>
+    </div>`;
+  }).join('') : `<div class="empty-state"><div class="icon">📋</div><p>No applications yet.</p><br><button class="btn-gold" onclick="navigate('job-board')">Browse Jobs</button></div>`;
+
+  return `<div class="page">
+    <div class="dash-header">
+      <div>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:4px">Welcome back,</p>
+        <div class="dash-title">${s.name}</div>
+      </div>
+      <button class="btn-gold" onclick="navigate('job-board')">Browse Jobs →</button>
+    </div>
+    <div class="stats-cards">
+      <div class="stat-card"><div class="num">${apps.length}</div><div class="lbl">Applications Sent</div></div>
+      <div class="stat-card"><div class="num" style="color:var(--green)">${passed}</div><div class="lbl">Passed Verification</div></div>
+      <div class="stat-card"><div class="num" style="color:var(--red)">${knocked}</div><div class="lbl">Knocked Out (with reason)</div></div>
+      <div class="stat-card"><div class="num" style="color:var(--gold)">${s.certs.length}</div><div class="lbl">Verified Certifications</div></div>
+    </div>
+    <div class="section-title">My Applications</div>
+    <div class="jobs-table">${appList}</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// AUTH FUNCTIONS
+// ═══════════════════════════════════════════════════
+function switchAuthTab(tab){
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+  document.getElementById('auth-login-form').style.display = tab==='login'?'block':'none';
+  document.getElementById('auth-register-form').style.display = tab==='register'?'block':'none';
+}
+
+function employerLogin(){
+  const email = document.getElementById('emp-email').value.trim();
+  const pass = document.getElementById('emp-pass').value;
+  const emp = db.employers.find(e=>e.email===email && e.password===pass);
+  if(!emp){ document.getElementById('login-err').innerHTML='<div class="alert alert-err">Invalid credentials. Try demo@proofhire.com / Demo@1234</div>'; return; }
+  state.currentUser = emp; state.userType = 'employer';
+  showToast(`Welcome back, ${emp.company}!`);
+  navigate('employer-dashboard');
+}
+
+function employerRegister(){
+  const name = document.getElementById('reg-name').value.trim();
+  const company = document.getElementById('reg-company').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+  if(!name||!company||!email||!pass){ document.getElementById('register-err').innerHTML='<div class="alert alert-err">All fields are required.</div>'; return; }
+  if(db.employers.find(e=>e.email===email)){ document.getElementById('register-err').innerHTML='<div class="alert alert-err">Email already registered.</div>'; return; }
+  const newEmp = { id:`e${Date.now()}`, name, company, email, password:pass, sector: document.getElementById('reg-sector').value };
+  db.employers.push(newEmp);
+  state.currentUser = newEmp; state.userType = 'employer';
+  showToast(`Welcome to ProofHire, ${company}!`);
+  navigate('employer-dashboard');
+}
+
+function seekerLogin(){
+  const email = document.getElementById('sk-email').value.trim();
+  const pass = document.getElementById('sk-pass').value;
+  const s = db.seekers.find(s=>s.email===email && s.password===pass);
+  if(!s){ document.getElementById('login-err').innerHTML='<div class="alert alert-err">Invalid credentials. Try jordan@demo.com / Demo@1234</div>'; return; }
+  state.currentUser = s; state.userType = 'seeker';
+  showToast(`Welcome back, ${s.name}!`);
+  navigate('seeker-dashboard');
+}
+
+function seekerRegister(){
+  const name = document.getElementById('sreg-name').value.trim();
+  const email = document.getElementById('sreg-email').value.trim();
+  const pass = document.getElementById('sreg-pass').value;
+  if(!name||!email||!pass){ document.getElementById('register-err').innerHTML='<div class="alert alert-err">Name, email, and password are required.</div>'; return; }
+  if(db.seekers.find(s=>s.email===email)){ document.getElementById('register-err').innerHTML='<div class="alert alert-err">Email already registered.</div>'; return; }
+  const newSeeker = { id:`s${Date.now()}`, name, email, password:pass,
+    phone:document.getElementById('sreg-phone').value,
+    location:document.getElementById('sreg-location').value||'Niagara Region, ON',
+    sector:document.getElementById('sreg-sector').value,
+    experience:'', certs:[], availability:'Full-time', transport:false };
+  db.seekers.push(newSeeker);
+  state.currentUser = newSeeker; state.userType = 'seeker';
+  showToast(`Welcome to ProofHire, ${name}! Now build your profile.`);
+  navigate('seeker-profile');
+}
+
+function logout(){
+  state.currentUser = null; state.userType = null;
+  navigate('landing');
+}
+
+function toggleShortlist(appId){
+  const app = db.applications.find(a=>a.id===appId);
+  if(app){ app.shortlisted = !app.shortlisted; showToast(app.shortlisted?'★ Shortlisted!':'Removed from shortlist','var(--gold)'); render(); }
+}
+
+function openPublicJob(jobId){
+  navigate('apply', { jobId });
+}
+
+function attachEvents(){ /* events are inline */ }
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+render();
+</script>
+</body>
+</html>
